@@ -15,7 +15,29 @@
       background: #b30000;
       color: white;
       padding: 1em 2em;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+      text-align: left;
+    }
+    .logo {
+      width: 100px;
+      height: auto;
+    }
+    .title-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .title-text h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+    .title-text p {
+      margin: 0;
+      font-size: 1em;
     }
     nav {
       background: #800000;
@@ -52,17 +74,16 @@
       margin-top: 1em;
       border-radius: 4px;
     }
-    .logo {
-      width: 100px;
-      margin-bottom: 1em;
-    }
   </style>
 </head>
 <body>
   <header>
     <img src="logo.png" alt="Refaiya Osama Logo" class="logo">
-    <h1>Refaiya Osama</h1>
-    <p>Trockenbau & Malerarbeiten mit Qualität und Erfahrung</p>
+    <div class="title-text">
+      <h1>Refaiya Osama</h1>
+      <p>Trockenbau & Malerarbeiten</p>
+      <p>mit Qualität und Erfahrung</p>
+    </div>
   </header>
 
   <nav>
