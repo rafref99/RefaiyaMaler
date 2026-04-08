@@ -598,6 +598,45 @@
       font-weight: 700;
       font-size: .85rem;
     }
+
+    /* =========================
+    Floating whatsapp icon
+    ========================== */
+    .wa-float{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+      z-index: 1000;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .wa-float img{
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+    }
+
+    .wa-float:hover{
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 16px 34px rgba(0,0,0,.3);
+    }
+
+    @media (max-width: 520px){
+      .wa-float{
+        width: 54px;
+        height: 54px;
+        right: 14px;
+        bottom: 14px;
+      }
+    }
   </style>
 </head>
 
@@ -672,7 +711,7 @@
 
         <div class="hero-actions">
           <a class="cta" href="tel:+491737204583">📞 Kostenlos beraten lassen</a>
-          <a class="cta secondary" href="mailto:refaiya.maler@gmail.com?subject=Anfrage%20%E2%80%93%20Refaiya%20Maler%20%26%20Trockenbau&body=Hallo%2C%0A%0Ich%20m%C3%B6chte%20ein%20Angebot%20anfragen.%0A%0AAdresse%3A%0AProjekt%3A%0AWann%3A%0AFotos%3A%0A%0AVielen%20Dank!">
+          <a class="cta secondary" href="mailto:refaiya.maler@gmail.com?subject=Anfrage%20%E2%80%93%20Refaiya%20Maler%20%26%20Trockenbau&body=Hallo%2C%0A%0AIch%20m%C3%B6chte%20ein%20Angebot%20anfragen.%0A%0AAdresse%3A%0AProjekt%3A%0AWann%3A%0AFotos%3A%0A%0AVielen%20Dank!">
             ✉️ Angebot per E-Mail
           </a>
           <a class="cta secondary" href="#galerie">🖼️ Arbeiten ansehen</a>
@@ -866,7 +905,7 @@
 
         <div class="contact-actions">
           <a class="cta" href="tel:+491737204583">📞 Anrufen</a>
-          <a class="cta secondary" href="mailto:refaiya.maler@gmail.com?subject=Anfrage%20%E2%80%93%20Refaiya&body=Hallo%2C%0A%0Ich%20m%C3%B6chte%20ein%20Angebot%20anfragen.%0A%0AAdresse%3A%0AProjekt%3A%0AWann%3A%0AFotos%3A%0A%0AVielen%20Dank!">✉️ E-Mail</a>
+          <a class="cta secondary" href="mailto:refaiya.maler@gmail.com?subject=Anfrage%20%E2%80%93%20Refaiya&body=Hallo%2C%0A%0AIch%20m%C3%B6chte%20ein%20Angebot%20anfragen.%0A%0AAdresse%3A%0AProjekt%3A%0AWann%3A%0AFotos%3A%0A%0AVielen%20Dank!">✉️ E-Mail</a>
         </div>
       </div>
 
@@ -967,5 +1006,17 @@
     if (e.key === "Escape" && dialog?.open) closeLightbox();
   });
 </script>
+
+  <!-- whatsapp button -->
+  <a
+          href="https://wa.me/491737204583?text=Hallo%2C%20ich%20m%C3%B6chte%20ein%20Angebot%20anfragen."
+          class="wa-float"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp schreiben"
+  >
+    <img src="whatsapp.png" alt="WhatsApp">
+  </a>
+
 </body>
 </html>
