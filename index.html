@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <link rel="icon" href="assets/logico.ico" sizes="any">
+  <link rel="icon" href="assets/refaiya-favicon.ico" sizes="any">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Refaiya – Malerarbeiten & Trockenbau</title>
@@ -328,7 +328,7 @@
       aspect-ratio: 4 / 3;
       background:
               linear-gradient(135deg, rgba(139,31,42,.55), rgba(215,176,98,.45)),
-              url("assets/profil.png") center/cover no-repeat;
+              url("assets/refaiya-logo.png") center/cover no-repeat;
       border-bottom: 1px solid rgba(31,35,40,.08);
     }
 
@@ -427,6 +427,50 @@
       .cards{ grid-template-columns: 1fr; }
     }
 
+    /* Special material systems */
+    .material-feature{
+      margin-top: 1rem;
+      border: 1px solid rgba(139,31,42,.14);
+      background:
+        radial-gradient(circle at 88% 18%, rgba(215,176,98,.28) 0 2px, transparent 3px),
+        radial-gradient(circle at 94% 46%, rgba(215,176,98,.22) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 82% 68%, rgba(139,31,42,.16) 0 2px, transparent 3px),
+        linear-gradient(135deg, rgba(139,31,42,.06), rgba(215,176,98,.13));
+      border-radius: 18px;
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+    .material-feature-content{
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 1rem;
+    }
+    .material-feature .icon{
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(139,31,42,.12);
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,.05);
+    }
+    .material-feature strong{ display: block; font-size: 1.05rem; }
+    .material-feature p{ margin: .2rem 0 0; color: var(--muted); }
+
+    @media (max-width: 720px){
+      .material-feature{ align-items: stretch; flex-direction: column; }
+      .material-feature .cta{ justify-content: center; }
+    }
+    @media (max-width: 420px){
+      .material-feature-content{ grid-template-columns: 1fr; }
+    }
+
     /* About grid */
     .about-grid{
       display: grid;
@@ -459,15 +503,13 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
     }
-    @media (max-width: 980px){
-      .gallery{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 520px){
+    @media (max-width: 720px){
       .gallery{ grid-template-columns: 1fr; }
     }
 
     .thumb{
       position: relative;
+      margin: 0;
       border-radius: 18px;
       overflow: hidden;
       border: 1px solid rgba(31,35,40,.10);
@@ -482,21 +524,68 @@
       transform: scale(1.01);
       transition: transform .35s ease;
     }
-    .thumb:hover img{ transform: scale(1.06); }
+    .gallery.is-expanded .thumb:hover img,
+    .gallery:not(.is-expanded) .thumb:nth-child(-n+3):hover img{
+      transform: scale(1.06);
+    }
 
     .thumb .label{
       position: absolute;
       left: 12px;
       bottom: 12px;
+      max-width: calc(100% - 24px);
       padding: .35rem .6rem;
       border-radius: 999px;
       background: rgba(0,0,0,.55);
       color: #fff;
       font-weight: 700;
       font-size: .9rem;
+      line-height: 1.25;
       border: 1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(8px);
     }
+
+    /* Collapsed gallery: one full row and a faded preview of the next row */
+    .gallery:not(.is-expanded) .thumb:nth-child(n+7){
+      display: none;
+    }
+    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6){
+      height: 92px;
+      cursor: default;
+      box-shadow: 0 8px 16px rgba(0,0,0,.05);
+    }
+    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6) img{
+      height: 150px;
+      transform: scale(1.01);
+    }
+    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6)::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.97) 100%);
+      pointer-events: none;
+    }
+    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6) .label{
+      display: none;
+    }
+    .gallery-toggle-wrap{
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .gallery-toggle{
+      cursor: pointer;
+      font: inherit;
+    }
+    .gallery-toggle-icon{
+      display: inline-block;
+      font-size: 1.1rem;
+      transition: transform .25s ease;
+    }
+    .gallery-toggle[aria-expanded="true"] .gallery-toggle-icon{
+      transform: rotate(180deg);
+    }
+    #galerie{ scroll-margin-top: 90px; }
 
     /* Lightbox dialog */
     dialog{
@@ -661,7 +750,7 @@
 <header>
   <div class="container nav">
     <a class="brand" href="#top" aria-label="Startseite">
-      <img src="assets/profil.png" alt="Refaiya Logo">
+      <img src="assets/refaiya-logo.png" alt="Refaiya Logo">
       <div class="name">
         <strong>Refaiya</strong>
         <span>Malerarbeiten & Trockenbau</span>
@@ -784,6 +873,22 @@
         <p>Modernisierung, Ausbesserung, Wärmedämmung – für ein besseres Wohngefühl.</p>
       </div>
     </div>
+
+    <div class="material-feature">
+      <div class="material-feature-content">
+        <div class="icon" aria-hidden="true">✨</div>
+        <div>
+          <strong>Pix-Light LED-Sternenhimmel</strong>
+          <p>
+            Wir verarbeiten und montieren auch Materialien und Systeme von Pix-Light –
+            für individuell gestaltete LED-Sternenhimmel an Decken und Wänden.
+          </p>
+        </div>
+      </div>
+      <a class="cta secondary" href="https://pix-light.de/" target="_blank" rel="noopener noreferrer">
+        Pix-Light ansehen ↗
+      </a>
+    </div>
   </div>
 </section>
 
@@ -828,61 +933,82 @@
     </div>
 
     <div class="gallery" id="galleryGrid">
-      <!-- Keep your filenames. Labels can be changed freely -->
-      <figure class="thumb" data-full="assets/prob1.jpg" data-title="Trockenbau">
-        <img src="assets/prob1.jpg" alt="Projekt 1 – Trockenbau" loading="lazy">
-        <figcaption class="label">Trockenbau</figcaption>
+      <figure class="thumb" data-full="assets/dachgeschossrenovierung-nachher.jpg" data-title="Dachgeschoss – nachher">
+        <img src="assets/dachgeschossrenovierung-nachher.jpg" alt="Fertig renovierter Dachgeschossraum mit weißen Wänden und neuer Decke" loading="lazy">
+        <figcaption class="label">Dachgeschoss – nachher</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob2.jpg" data-title="Trockenbau">
-        <img src="assets/prob2.jpg" alt="Projekt 2 – Trockenbau" loading="lazy">
-        <figcaption class="label">Trockenbau</figcaption>
+      <figure class="thumb" data-full="assets/dachgeschossrenovierung-trockenbau.jpg" data-title="Dachgeschoss – Trockenbau">
+        <img src="assets/dachgeschossrenovierung-trockenbau.jpg" alt="Dachgeschoss während der Verkleidung der Decke mit Trockenbauplatten" loading="lazy">
+        <figcaption class="label">Dachgeschoss – Trockenbau</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob3.jpg" data-title="Trockenbau">
-        <img src="assets/prob3.jpg" alt="Projekt 3 – Trockenbau" loading="lazy">
-        <figcaption class="label">Trockenbau</figcaption>
+      <figure class="thumb" data-full="assets/dachgeschossrenovierung-vorher.jpg" data-title="Dachgeschoss – vorher">
+        <img src="assets/dachgeschossrenovierung-vorher.jpg" alt="Dachgeschossraum mit alter Holzdecke vor der Renovierung" loading="lazy">
+        <figcaption class="label">Dachgeschoss – vorher</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob4.jpg" data-title="Trockenbau">
-        <img src="assets/prob4.jpg" alt="Projekt 4 – Trockenbau" loading="lazy">
-        <figcaption class="label">Trockenbau</figcaption>
+      <figure class="thumb" data-full="assets/treppenverkleidung-verspachtelt.jpg" data-title="Treppenverkleidung – verspachtelt">
+        <img src="assets/treppenverkleidung-verspachtelt.jpg" alt="Verspachtelte Trockenbauverkleidung einer Treppe" loading="lazy">
+        <figcaption class="label">Treppenverkleidung – verspachtelt</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob5.jpg" data-title="Auto">
-        <img src="assets/prob5.jpg" alt="Projekt 5 – Auto" loading="lazy">
-        <figcaption class="label">Auto</figcaption>
+      <figure class="thumb" data-full="assets/treppenverkleidung-unterkonstruktion.jpg" data-title="Treppenverkleidung – Aufbau">
+        <img src="assets/treppenverkleidung-unterkonstruktion.jpg" alt="Unterkonstruktion und Dämmung einer Treppenverkleidung" loading="lazy">
+        <figcaption class="label">Treppenverkleidung – Aufbau</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob6.jpg" data-title="Trockenbau">
-        <img src="assets/prob6.jpg" alt="Projekt 6 – Trockenbau" loading="lazy">
-        <figcaption class="label">Trockenbau</figcaption>
+      <figure class="thumb" data-full="assets/trockenbau-treppenhaus.jpg" data-title="Trockenbau im Treppenhaus">
+        <img src="assets/trockenbau-treppenhaus.jpg" alt="Trockenbauarbeiten rund um ein neues Treppenhaus" loading="lazy">
+        <figcaption class="label">Trockenbau im Treppenhaus</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob7.jpg" data-title="Bevor">
-        <img src="assets/prob7.jpg" alt="Projekt 7 – Bevor" loading="lazy">
-        <figcaption class="label">Bevor</figcaption>
+      <figure class="thumb" data-full="assets/trockenbau-decke-lichtschienen.jpg" data-title="Decke mit Lichtschienen">
+        <img src="assets/trockenbau-decke-lichtschienen.jpg" alt="Verspachtelte Trockenbaudecke mit eingelassenen Lichtschienen" loading="lazy">
+        <figcaption class="label">Decke mit Lichtschienen</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob8.jpg" data-title="Nach">
-        <img src="assets/prob8.jpg" alt="Projekt 8 – Nach" loading="lazy">
-        <figcaption class="label">Nach</figcaption>
+      <figure class="thumb" data-full="assets/bad-trockenbau-unterkonstruktion.jpg" data-title="Bad – Trockenbau und Dämmung">
+        <img src="assets/bad-trockenbau-unterkonstruktion.jpg" alt="Gedämmte Trockenbau-Unterkonstruktion für ein Badezimmer" loading="lazy">
+        <figcaption class="label">Bad – Trockenbau und Dämmung</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob9.jpg" data-title="Trockenbau">
-        <img src="assets/prob9.jpg" alt="Projekt 9 – Trockenbau" loading="lazy">
-        <figcaption class="label">Trockenbau</figcaption>
+      <figure class="thumb" data-full="assets/bad-vorwandinstallation-daemmung.jpg" data-title="Bad – Vorwandinstallation">
+        <img src="assets/bad-vorwandinstallation-daemmung.jpg" alt="Vorwandinstallation im Bad mit Metallprofilen und Dämmung" loading="lazy">
+        <figcaption class="label">Bad – Vorwandinstallation</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob10.jpg" data-title="Decke">
-        <img src="assets/prob10.jpg" alt="Projekt 10 – Decke" loading="lazy">
-        <figcaption class="label">Decke</figcaption>
+      <figure class="thumb" data-full="assets/installationswand-verspachtelt.jpg" data-title="Installationswand – verspachtelt">
+        <img src="assets/installationswand-verspachtelt.jpg" alt="Verspachtelte Installationswand mit vorbereiteten Elektroanschlüssen" loading="lazy">
+        <figcaption class="label">Installationswand – verspachtelt</figcaption>
       </figure>
 
-      <figure class="thumb" data-full="assets/prob11.jpg" data-title="Decke">
-        <img src="assets/prob11.jpg" alt="Projekt 11 – Decke" loading="lazy">
-        <figcaption class="label">Decke</figcaption>
+      <figure class="thumb" data-full="assets/trockenbau-decke-verspachtelt.jpg" data-title="Trockenbaudecke – verspachtelt">
+        <img src="assets/trockenbau-decke-verspachtelt.jpg" alt="Verspachtelte Trockenbaudecke und Wandverkleidung" loading="lazy">
+        <figcaption class="label">Trockenbaudecke – verspachtelt</figcaption>
       </figure>
+
+      <figure class="thumb" data-full="assets/installationswand-daemmung.jpg" data-title="Installationswand mit Dämmung">
+        <img src="assets/installationswand-daemmung.jpg" alt="Installationswand mit Metallprofilen, Leitungen und Dämmung" loading="lazy">
+        <figcaption class="label">Installationswand mit Dämmung</figcaption>
+      </figure>
+
+      <figure class="thumb" data-full="assets/trockenbau-wand-mit-nische.jpg" data-title="Trockenbauwand mit Nische">
+        <img src="assets/trockenbau-wand-mit-nische.jpg" alt="Verspachtelte Trockenbauwand mit individuell gebauter Nische" loading="lazy">
+        <figcaption class="label">Trockenbauwand mit Nische</figcaption>
+      </figure>
+
+      <figure class="thumb" data-full="assets/refaiya-firmenfahrzeug.jpg" data-title="Refaiya Firmenfahrzeug">
+        <img src="assets/refaiya-firmenfahrzeug.jpg" alt="Firmenfahrzeug von Refaiya Maler und Trockenbau" loading="lazy">
+        <figcaption class="label">Refaiya Firmenfahrzeug</figcaption>
+      </figure>
+    </div>
+
+    <div class="gallery-toggle-wrap">
+      <button class="cta secondary gallery-toggle" id="galleryToggle" type="button" aria-controls="galleryGrid" aria-expanded="false">
+        <span id="galleryToggleLabel">Alle 14 Bilder anzeigen</span>
+        <span class="gallery-toggle-icon" aria-hidden="true">⌄</span>
+      </button>
     </div>
   </div>
 </section>
@@ -968,6 +1094,34 @@
   const imgEl = document.getElementById("lightboxImg");
   const titleEl = document.getElementById("lightboxTitle");
   const closeBtn = document.getElementById("lightboxClose");
+  const galleryGrid = document.getElementById("galleryGrid");
+  const galleryToggle = document.getElementById("galleryToggle");
+  const galleryToggleLabel = document.getElementById("galleryToggleLabel");
+  const galleryItems = galleryGrid ? [...galleryGrid.querySelectorAll(".thumb")] : [];
+
+  function setGalleryExpanded(expanded){
+    galleryGrid?.classList.toggle("is-expanded", expanded);
+    galleryToggle?.setAttribute("aria-expanded", expanded ? "true" : "false");
+    if (galleryToggleLabel) {
+      galleryToggleLabel.textContent = expanded
+        ? "Galerie einklappen"
+        : `Alle ${galleryItems.length} Bilder anzeigen`;
+    }
+    galleryItems.forEach((item, index) => {
+      if (expanded || index < 3) item.removeAttribute("aria-hidden");
+      else item.setAttribute("aria-hidden", "true");
+    });
+  }
+
+  setGalleryExpanded(false);
+
+  galleryToggle?.addEventListener("click", () => {
+    const expanded = galleryToggle.getAttribute("aria-expanded") !== "true";
+    setGalleryExpanded(expanded);
+    if (!expanded) {
+      document.getElementById("galerie")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
 
   function openLightbox(src, title, alt){
     if (!dialog) return;
@@ -983,9 +1137,9 @@
     imgEl.src = "";
   }
 
-  document.getElementById("galleryGrid")?.addEventListener("click", (e) => {
+  galleryGrid?.addEventListener("click", (e) => {
     const fig = e.target.closest(".thumb");
-    if (!fig) return;
+    if (!fig || fig.getAttribute("aria-hidden") === "true") return;
     const src = fig.getAttribute("data-full");
     const title = fig.getAttribute("data-title");
     const img = fig.querySelector("img");
@@ -1015,7 +1169,7 @@
           rel="noopener noreferrer"
           aria-label="WhatsApp schreiben"
   >
-    <img src="assets/whatsapp.png" alt="WhatsApp">
+    <img src="assets/whatsapp-icon.png" alt="WhatsApp">
   </a>
 
 </body>

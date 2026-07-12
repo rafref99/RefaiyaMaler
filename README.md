@@ -21,10 +21,10 @@ The site is hosted with GitHub Pages. The custom domain is configured through `C
 ├── README.md
 ├── index.html
 └── assets/
-    ├── logico.ico
-    ├── profil.png
-    ├── whatsapp.png
-    └── prob*.jpg
+    ├── refaiya-favicon.ico
+    ├── refaiya-logo.png
+    ├── whatsapp-icon.png
+    └── descriptively-named-gallery-images.jpg
 ```
 
 ## Running Locally
