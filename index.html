@@ -1,1176 +1,274 @@
 <!doctype html>
 <html lang="de">
-<head>
-  <link rel="icon" href="assets/refaiya-favicon.ico" sizes="any">
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Refaiya – Malerarbeiten & Trockenbau</title>
-  <meta name="description" content="Maler- & Lackierarbeiten, Trockenbau, Spachtelarbeiten, Tapezieren und Renovierung in Bayern. Refaiya – zuverlässig, sauber, präzise." />
-
-  <style>
-    /* =========================
-       Modern base + theme
-    ========================== */
-    :root{
-      --bg: #fbf7f7;
-      --surface: #ffffff;
-      --text: #1f2328;
-      --muted: #5b626a;
-
-      --brand: #8b1f2a;        /* deep red */
-      --brand-2: #6f1620;      /* darker */
-      --accent: #d7b062;       /* warm gold */
-      --ring: rgba(139,31,42,.25);
-
-      --radius: 18px;
-      --shadow: 0 12px 40px rgba(0,0,0,.10);
-      --shadow-soft: 0 10px 26px rgba(0,0,0,.08);
-      --border: rgba(31,35,40,.10);
-
-      --container: 1100px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body{
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 500px at 50% -80px, rgba(215,176,98,.18), transparent 55%),
-      radial-gradient(900px 450px at 15% 0, rgba(139,31,42,.10), transparent 55%),
-      var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    a { color: inherit; }
-    img { max-width: 100%; display: block; }
-
-    .container{
-      width: min(var(--container), calc(100% - 2rem));
-      margin-inline: auto;
-    }
-
-    /* Accessibility focus */
-    :focus-visible{
-      outline: 3px solid rgba(215,176,98,.65);
-      outline-offset: 3px;
-      border-radius: 10px;
-    }
-
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-    }
-
-    /* =========================
-       Top bar + Nav
-    ========================== */
-    .topbar{
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      color: #fff;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-    }
-
-    .topbar-inner{
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      justify-content: space-between;
-      padding: .75rem 0;
-      font-size: .95rem;
-      color: rgba(255,255,255,.9);
-    }
-
-    .topbar a{
-      text-decoration: none;
-      display: inline-flex;
-      gap: .5rem;
-      align-items: center;
-      padding: .35rem .6rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.14);
-    }
-    .topbar a:hover{ background: rgba(255,255,255,.16); }
-
-    header{
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(10px);
-      background: rgba(251,247,247,.75);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: .9rem 0;
-    }
-
-    .brand{
-      display: flex;
-      align-items: center;
-      gap: .85rem;
-      min-width: 220px;
-    }
-
-    .brand img{
-      width: 54px;
-      height: 54px;
-      object-fit: contain;
-      border-radius: 14px;
-      background: #fff;
-      border: 1px solid var(--border);
-      box-shadow: 0 6px 18px rgba(0,0,0,.06);
-      padding: 6px;
-    }
-
-    .brand .name{
-      display: grid;
-      gap: .1rem;
-      line-height: 1.1;
-    }
-    .brand .name strong{ font-size: 1.05rem; }
-    .brand .name span{ font-size: .9rem; color: var(--muted); }
-
-    nav ul{
-      list-style: none;
-      display: flex;
-      gap: .25rem;
-      padding: 0;
-      margin: 0;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    nav a{
-      text-decoration: none;
-      padding: .6rem .85rem;
-      border-radius: 999px;
-      color: var(--text);
-      font-weight: 600;
-      font-size: .95rem;
-      border: 1px solid transparent;
-    }
-    nav a:hover{
-      background: rgba(139,31,42,.06);
-      border-color: rgba(139,31,42,.12);
-    }
-
-    .cta{
-      display: inline-flex;
-      align-items: center;
-      gap: .55rem;
-      text-decoration: none;
-      padding: .65rem .9rem;
-      border-radius: 999px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.0);
-      box-shadow: 0 12px 26px rgba(139,31,42,.25);
-      white-space: nowrap;
-    }
-    .cta:hover{ filter: brightness(1.05); }
-
-    .cta.secondary{
-      background: #fff;
-      color: var(--brand);
-      border: 1px solid rgba(139,31,42,.18);
-      box-shadow: none;
-    }
-    .cta.secondary:hover{ background: rgba(139,31,42,.04); }
-
-    /* Mobile nav */
-    .menu-btn{
-      display: none;
-      border: 1px solid var(--border);
-      background: #fff;
-      padding: .55rem .7rem;
-      border-radius: 12px;
-      font-weight: 700;
-    }
-
-    @media (max-width: 860px){
-      nav ul{ display: none; }
-      .menu-btn{ display: inline-flex; align-items: center; gap: .5rem; }
-      .brand{ min-width: auto; }
-    }
-
-    .mobile-drawer{
-      display: none;
-      border-top: 1px solid var(--border);
-      background: rgba(251,247,247,.92);
-    }
-    .mobile-drawer.open{ display: block; }
-    .mobile-drawer a{
-      display: block;
-      padding: .85rem 0;
-      text-decoration: none;
-      font-weight: 650;
-      color: var(--text);
-      border-bottom: 1px solid rgba(31,35,40,.06);
-    }
-
-    /* =========================
-       Hero
-    ========================== */
-    .hero{
-      padding: 2.4rem 0 1.4rem;
-    }
-
-    .hero-grid{
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 1.4rem;
-      align-items: stretch;
-    }
-
-    .hero-card{
-      background: rgba(255,255,255,.85);
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-      min-height: 320px;
-    }
-
-    .hero-card::before{
-      content: "";
-      position: absolute;
-      inset: -120px -120px auto auto;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle at 30% 30%, rgba(215,176,98,.40), rgba(215,176,98,0) 60%);
-      transform: rotate(12deg);
-      pointer-events: none;
-    }
-
-    .hero-inner{
-      padding: 2rem;
-      display: grid;
-      gap: 1rem;
-    }
-
-    .kicker{
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      width: fit-content;
-      padding: .35rem .6rem;
-      border-radius: 999px;
-      background: rgba(139,31,42,.08);
-      border: 1px solid rgba(139,31,42,.12);
-      color: var(--brand);
-      font-weight: 800;
-      font-size: .85rem;
-      letter-spacing: .2px;
-    }
-
-    h1{
-      margin: 0;
-      font-size: clamp(1.8rem, 2.6vw, 2.6rem);
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-    }
-
-    .hero p{
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 58ch;
-    }
-
-    .hero-actions{
-      display: flex;
-      gap: .8rem;
-      flex-wrap: wrap;
-      padding-top: .2rem;
-    }
-
-    .trust{
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: .8rem;
-      padding: 1.2rem 2rem 2rem;
-      border-top: 1px solid rgba(31,35,40,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.95));
-    }
-    .pill{
-      border: 1px solid rgba(31,35,40,.10);
-      background: rgba(255,255,255,.9);
-      border-radius: 16px;
-      padding: .75rem .85rem;
-      display: grid;
-      gap: .15rem;
-      box-shadow: 0 8px 18px rgba(0,0,0,.06);
-      min-height: 72px;
-    }
-    .pill strong{ font-size: 1rem; }
-    .pill span{ font-size: .9rem; color: var(--muted); }
-
-    .hero-side{
-      background: rgba(255,255,255,.85);
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      display: grid;
-      align-content: start;
-    }
-
-    .hero-photo{
-      aspect-ratio: 4 / 3;
-      background:
-              linear-gradient(135deg, rgba(139,31,42,.55), rgba(215,176,98,.45)),
-              url("assets/refaiya-logo.png") center/cover no-repeat;
-      border-bottom: 1px solid rgba(31,35,40,.08);
-    }
-
-    .side-inner{
-      padding: 1.2rem 1.2rem 1.3rem;
-      display: grid;
-      gap: .8rem;
-    }
-    .side-inner h3{
-      margin: 0;
-      font-size: 1.05rem;
-    }
-    .checklist{
-      margin: 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
-      display: grid;
-      gap: .35rem;
-      font-size: .98rem;
-    }
-
-    @media (max-width: 980px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .trust{ grid-template-columns: 1fr; }
-    }
-
-    /* =========================
-       Sections
-    ========================== */
-    section{
-      padding: 1.4rem 0;
-    }
-
-    .section-card{
-      background: rgba(255,255,255,.88);
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: var(--shadow-soft);
-      padding: 1.5rem;
-    }
-
-    .section-head{
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    h2{
-      margin: 0;
-      font-size: 1.55rem;
-      letter-spacing: -0.01em;
-    }
-    .sub{
-      margin: 0;
-      color: var(--muted);
-      max-width: 70ch;
-    }
-
-    /* Leistungen cards */
-    .cards{
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
-    .card{
-      border: 1px solid rgba(31,35,40,.10);
-      background: rgba(255,255,255,.95);
-      border-radius: 18px;
-      padding: 1.05rem;
-      box-shadow: 0 10px 18px rgba(0,0,0,.05);
-      display: grid;
-      gap: .4rem;
-      min-height: 140px;
-    }
-    .card .icon{
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: rgba(139,31,42,.08);
-      border: 1px solid rgba(139,31,42,.12);
-      display: grid;
-      place-items: center;
-      color: var(--brand);
-      font-weight: 900;
-    }
-    .card strong{ font-size: 1.02rem; }
-    .card p{ margin: 0; color: var(--muted); font-size: .96rem; }
-
-    @media (max-width: 980px){
-      .cards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 520px){
-      .cards{ grid-template-columns: 1fr; }
-    }
-
-    /* Special material systems */
-    .material-feature{
-      margin-top: 1rem;
-      border: 1px solid rgba(139,31,42,.14);
-      background:
-        radial-gradient(circle at 88% 18%, rgba(215,176,98,.28) 0 2px, transparent 3px),
-        radial-gradient(circle at 94% 46%, rgba(215,176,98,.22) 0 1.5px, transparent 2.5px),
-        radial-gradient(circle at 82% 68%, rgba(139,31,42,.16) 0 2px, transparent 3px),
-        linear-gradient(135deg, rgba(139,31,42,.06), rgba(215,176,98,.13));
-      border-radius: 18px;
-      padding: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.2rem;
-    }
-    .material-feature-content{
-      display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 1rem;
-    }
-    .material-feature .icon{
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.82);
-      border: 1px solid rgba(139,31,42,.12);
-      display: grid;
-      place-items: center;
-      font-size: 1.35rem;
-      box-shadow: 0 8px 18px rgba(0,0,0,.05);
-    }
-    .material-feature strong{ display: block; font-size: 1.05rem; }
-    .material-feature p{ margin: .2rem 0 0; color: var(--muted); }
-
-    @media (max-width: 720px){
-      .material-feature{ align-items: stretch; flex-direction: column; }
-      .material-feature .cta{ justify-content: center; }
-    }
-    @media (max-width: 420px){
-      .material-feature-content{ grid-template-columns: 1fr; }
-    }
-
-    /* About grid */
-    .about-grid{
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 1rem;
-      align-items: start;
-    }
-    .about-box{
-      border: 1px solid rgba(31,35,40,.10);
-      background: rgba(255,255,255,.95);
-      border-radius: 18px;
-      padding: 1.1rem;
-    }
-    .about-box ul{
-      margin: .75rem 0 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
-      display: grid;
-      gap: .35rem;
-    }
-    @media (max-width: 980px){
-      .about-grid{ grid-template-columns: 1fr; }
-    }
-
-    /* =========================
-       Gallery
-    ========================== */
-    .gallery{
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-    @media (max-width: 720px){
-      .gallery{ grid-template-columns: 1fr; }
-    }
-
-    .thumb{
-      position: relative;
-      margin: 0;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid rgba(31,35,40,.10);
-      box-shadow: 0 12px 20px rgba(0,0,0,.08);
-      cursor: zoom-in;
-      background: #fff;
-    }
-    .thumb img{
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      transform: scale(1.01);
-      transition: transform .35s ease;
-    }
-    .gallery.is-expanded .thumb:hover img,
-    .gallery:not(.is-expanded) .thumb:nth-child(-n+3):hover img{
-      transform: scale(1.06);
-    }
-
-    .thumb .label{
-      position: absolute;
-      left: 12px;
-      bottom: 12px;
-      max-width: calc(100% - 24px);
-      padding: .35rem .6rem;
-      border-radius: 999px;
-      background: rgba(0,0,0,.55);
-      color: #fff;
-      font-weight: 700;
-      font-size: .9rem;
-      line-height: 1.25;
-      border: 1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(8px);
-    }
-
-    /* Collapsed gallery: one full row and a faded preview of the next row */
-    .gallery:not(.is-expanded) .thumb:nth-child(n+7){
-      display: none;
-    }
-    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6){
-      height: 92px;
-      cursor: default;
-      box-shadow: 0 8px 16px rgba(0,0,0,.05);
-    }
-    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6) img{
-      height: 150px;
-      transform: scale(1.01);
-    }
-    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6)::after{
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.97) 100%);
-      pointer-events: none;
-    }
-    .gallery:not(.is-expanded) .thumb:nth-child(n+4):nth-child(-n+6) .label{
-      display: none;
-    }
-    .gallery-toggle-wrap{
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-    .gallery-toggle{
-      cursor: pointer;
-      font: inherit;
-    }
-    .gallery-toggle-icon{
-      display: inline-block;
-      font-size: 1.1rem;
-      transition: transform .25s ease;
-    }
-    .gallery-toggle[aria-expanded="true"] .gallery-toggle-icon{
-      transform: rotate(180deg);
-    }
-    #galerie{ scroll-margin-top: 90px; }
-
-    /* Lightbox dialog */
-    dialog{
-      width: min(980px, calc(100% - 2rem));
-      border: 0;
-      border-radius: 18px;
-      padding: 0;
-      overflow: hidden;
-      box-shadow: 0 22px 70px rgba(0,0,0,.35);
-      background: #111;
-      color: #fff;
-    }
-    dialog::backdrop{
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(4px);
-    }
-    .lightbox{
-      position: relative;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      min-height: 240px;
-    }
-    .lightbox-bar{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: .8rem 1rem;
-      background: rgba(20,20,20,.9);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .lightbox-title{
-      font-weight: 800;
-      font-size: 1rem;
-      color: rgba(255,255,255,.92);
-    }
-    .lightbox-close{
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.08);
-      color: #fff;
-      border-radius: 12px;
-      padding: .45rem .7rem;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    .lightbox-close:hover{ background: rgba(255,255,255,.12); }
-
-    .lightbox-img{
-      width: 100%;
-      height: auto;
-      max-height: 72vh;
-      object-fit: contain;
-      background: #000;
-    }
-
-    /* =========================
-       Contact
-    ========================== */
-    .contact-grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      align-items: start;
-    }
-    .contact-actions{
-      display: flex;
-      gap: .7rem;
-      flex-wrap: wrap;
-      margin-top: .8rem;
-    }
-    .info{
-      display: grid;
-      gap: .5rem;
-      color: var(--muted);
-    }
-    .info strong{ color: var(--text); }
-
-    @media (max-width: 980px){
-      .contact-grid{ grid-template-columns: 1fr; }
-    }
-
-    footer{
-      padding: 2.2rem 0 2.6rem;
-      color: var(--muted);
-      text-align: center;
-      font-size: .95rem;
-    }
-
-    /* Small helper */
-    .badge{
-      display: inline-flex;
-      gap: .45rem;
-      align-items: center;
-      padding: .3rem .55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(31,35,40,.10);
-      background: rgba(255,255,255,.85);
-      color: var(--muted);
-      font-weight: 700;
-      font-size: .85rem;
-    }
-
-    /* =========================
-    Floating whatsapp icon
-    ========================== */
-    .wa-float{
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      box-shadow: 0 12px 28px rgba(0,0,0,.25);
-      z-index: 1000;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .wa-float img{
-      width: 70%;
-      height: 70%;
-      object-fit: contain;
-    }
-
-    .wa-float:hover{
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 16px 34px rgba(0,0,0,.3);
-    }
-
-    @media (max-width: 520px){
-      .wa-float{
-        width: 54px;
-        height: 54px;
-        right: 14px;
-        bottom: 14px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<!-- Top info bar -->
-<div class="topbar">
-  <div class="container topbar-inner">
-    <div>
-        <span class="badge" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.92)">
-          📍 Bayern • Maler & Trockenbau
-        </span>
-    </div>
-    <div style="display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-end;">
-      <a href="tel:+491737204583" aria-label="Anrufen">📞 0173 7204583</a>
-      <a href="mailto:refaiya.maler@gmail.com" aria-label="E-Mail schreiben">✉️ E-Mail</a>
-    </div>
-  </div>
-</div>
-
-<!-- Sticky header navigation -->
-<header>
-  <div class="container nav">
-    <a class="brand" href="#top" aria-label="Startseite">
-      <img src="assets/refaiya-logo.png" alt="Refaiya Logo">
-      <div class="name">
-        <strong>Refaiya</strong>
-        <span>Malerarbeiten & Trockenbau</span>
-      </div>
-    </a>
-
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">
-      ☰ Menü
-    </button>
-
-    <nav aria-label="Hauptnavigation">
-      <ul>
-        <li><a href="#leistungen">Leistungen</a></li>
-        <li><a href="#ueberuns">Über uns</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
-        <li><a class="cta secondary" href="#kontakt">Angebot anfragen</a></li>
-        <li><a class="cta" href="tel:+491737204583">Jetzt anrufen</a></li>
-      </ul>
-    </nav>
-  </div>
-
-  <!-- Mobile drawer -->
-  <div class="mobile-drawer" id="mobileNav">
-    <div class="container">
-      <a href="#leistungen">Leistungen</a>
-      <a href="#ueberuns">Über uns</a>
-      <a href="#galerie">Galerie</a>
-      <a href="#kontakt">Kontakt</a>
-      <a href="tel:+491737204583" style="font-weight:900;color:var(--brand)">📞 Jetzt anrufen</a>
-    </div>
-  </div>
-</header>
-
-<!-- HERO -->
-<main id="top" class="hero">
-  <div class="container hero-grid">
-
-    <div class="hero-card">
-      <div class="hero-inner">
-        <div class="kicker">Sauber • Präzise • Zuverlässig</div>
-        <h1>Malerarbeiten & Trockenbau<br>für ein Ergebnis, das man sofort sieht.</h1>
-        <p>
-          Refaiya steht für professionelle Ausführung in Bayern – von Maler- und Lackierarbeiten
-          über Trockenbau bis Spachteln, Tapezieren und Renovierung.
-        </p>
-
-        <div class="hero-actions">
-          <a class="cta" href="tel:+491737204583">📞 Kostenlos beraten lassen</a>
-          <a class="cta secondary" href="mailto:refaiya.maler@gmail.com?subject=Anfrage%20%E2%80%93%20Refaiya%20Maler%20%26%20Trockenbau&body=Hallo%2C%0A%0AIch%20m%C3%B6chte%20ein%20Angebot%20anfragen.%0A%0AAdresse%3A%0AProjekt%3A%0AWann%3A%0AFotos%3A%0A%0AVielen%20Dank!">
-            ✉️ Angebot per E-Mail
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#a6061d">
+    <title>Refaiya | Maler & Trockenbau in Peißenberg</title>
+    <meta name="description" content="Refaiya in Peißenberg: Malerarbeiten, Trockenbau und individuelle Raumgestaltung. Über 25 Jahre Erfahrung in Griechenland und Bayern. Jetzt Projekt anfragen.">
+    <link rel="canonical" href="https://refaiyamaler.de/">
+    <link rel="icon" href="assets/refaiya-favicon.ico" sizes="any">
+    <meta property="og:title" content="Refaiya | Maler & Trockenbau in Peißenberg">
+    <meta property="og:description" content="Refaiya in Peißenberg: Malerarbeiten, Trockenbau und individuelle Raumgestaltung. Über 25 Jahre Erfahrung in Griechenland und Bayern. Jetzt Projekt anfragen.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:url" content="https://refaiyamaler.de/">
+    <meta property="og:image" content="https://refaiyamaler.de/assets/projects/lichtnischen-flur-large.webp">
+    <link rel="stylesheet" href="assets/site.css?v=8">
+    <script src="assets/site.js?v=4" defer>
+    </script>
+  </head>
+  <body id="top">
+    <a class="skip" href="#main">Zum Inhalt springen</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="index.html" aria-label="Refaiya – Startseite">
+          <img class="brand-logo" src="assets/download.png" width="1464" height="1075" alt="Refaiya – Maler & Trockenbau">
+        </a>
+        <button class="menu-toggle" type="button" aria-controls="navigation" aria-expanded="false">Menü +</button>
+        <nav class="nav" id="navigation" aria-label="Hauptnavigation">
+          <a class="home-nav" href="index.html" aria-current="page">Startseite</a>
+          <a href="index.html#leistungen">Leistungen</a>
+          <a href="galerie.html" >Unsere Arbeiten</a>
+          <a class="button" href="index.html#kontakt">Projekt anfragen <span aria-hidden="true">↗</span>
           </a>
-          <a class="cta secondary" href="#galerie">🖼️ Arbeiten ansehen</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <div class="wrap">
+        <section class="hero" aria-labelledby="hero-heading">
+          <div class="hero-copy">
+            <p class="eyebrow">Maler & Trockenbau · Peißenberg</p>
+            <h1 id="hero-heading">Gute Räume.<br>Bis ins <em>Detail.</em>
+            </h1>
+            <p>Farbe, Form und sauberes Handwerk. Wir gestalten Innenräume, die zu Ihnen passen – vom ersten Anstrich bis zum durchdachten Ausbau.</p>
+            <div class="actions">
+              <a class="button" href="#kontakt">Ihr Projekt besprechen <span class="arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="button light" href="galerie.html">Arbeiten entdecken</a>
+            </div>
+            <div class="hero-note">Über 25 Jahre Erfahrung · Griechenland & Bayern</div>
+          </div>
+          <figure class="hero-photo hero-slideshow" aria-label="Ausgewählte Arbeiten" aria-roledescription="Diashow">
+            <a class="hero-slide is-active" href="assets/projects/regalwand-gruen-large.webp" data-lightbox data-title="Einbauten mit Farbe" data-description="Weiße Regalfächer und grüne Rückflächen gliedern die Wand im Geschäftsraum." aria-label="Einbauten mit Farbe – Bild vergrößern">
+              <img src="assets/projects/regalwand-gruen-small.webp" srcset="assets/projects/regalwand-gruen-small.webp 720w, assets/projects/regalwand-gruen-large.webp 1800w" sizes="(max-width: 760px) 100vw, 50vw" width="1800" height="1350" alt="Weiße eingebaute Regalwand mit grünen Rückflächen und dunklen Unterschränken" loading="eager" decoding="async" fetchpriority="high">
+            </a>
+            <a class="hero-slide" href="assets/projects/strukturwand-geschaeft-large.webp" data-lightbox data-title="Struktur trifft klare Linien" data-description="Graue Strukturflächen mit weißen Einfassungen; Aufnahme während des Ladenausbaus." aria-label="Struktur trifft klare Linien – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/strukturwand-geschaeft-small.webp" srcset="assets/projects/strukturwand-geschaeft-large.webp 640w" sizes="(max-width: 760px) 100vw, 50vw" width="640" height="480" alt="Graue strukturierte Wandfelder zwischen weißen Stützen, davor eine Leiter" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/ladenausbau-large.webp" data-lightbox data-title="Details im Geschäftsraum" data-description="Dunkler Tresen, graue Strukturwand und weiße Einbauten im Zusammenspiel." aria-label="Details im Geschäftsraum – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/ladenausbau-small.webp" srcset="assets/projects/ladenausbau-large.webp 480w" sizes="(max-width: 760px) 100vw, 50vw" width="480" height="640" alt="Geschäftsraum mit schwarzem Tresen, grauer Strukturwand und weißen Einbauten" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/pool-oberflaeche-large.webp" data-lightbox data-title="Rundungen sauber ausgearbeitet" data-description="Geschwungene Beckenflächen und integrierte Stufen während der Oberflächenarbeiten." aria-label="Rundungen sauber ausgearbeitet – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/pool-oberflaeche-small.webp" srcset="assets/projects/pool-oberflaeche-large.webp 640w" sizes="(max-width: 760px) 100vw, 50vw" width="640" height="480" alt="Leeres geschwungenes Schwimmbecken mit hellen Oberflächen und gerundeten Stufen" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/theke-formgestaltung-large.webp" data-lightbox data-title="Formen für den Empfang" data-description="Geschwungene Theke und grüne geometrische Wandelemente; Aufnahme aus der Ausbauphase." aria-label="Formen für den Empfang – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/theke-formgestaltung-small.webp" srcset="assets/projects/theke-formgestaltung-large.webp 480w" sizes="(max-width: 760px) 100vw, 50vw" width="480" height="640" alt="Graue runde Theke vor grünen geometrischen Wandregalen und einer Decke mit Spots" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/deckenlicht-linie-large.webp" data-lightbox data-title="Licht als klare Linie" data-description="Integrierte Lichtlinie in einer abgestuften weißen Decke; die Montage ist noch im Gang." aria-label="Licht als klare Linie – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/deckenlicht-linie-small.webp" srcset="assets/projects/deckenlicht-linie-small.webp 720w, assets/projects/deckenlicht-linie-large.webp 1800w" sizes="(max-width: 760px) 100vw, 50vw" width="1800" height="811" alt="Weiße abgehängte Decke mit langer Lichtlinie und noch offenen Leuchtenanschlüssen" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/wohnraum-kamin-large.webp" data-lightbox data-title="Ein Rahmen für den Kamin" data-description="Kaminverkleidung und abgestufte Decke verbinden den Wohnbereich; Detailarbeiten stehen noch aus." aria-label="Ein Rahmen für den Kamin – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/wohnraum-kamin-small.webp" srcset="assets/projects/wohnraum-kamin-small.webp 720w, assets/projects/wohnraum-kamin-large.webp 1800w" sizes="(max-width: 760px) 100vw, 50vw" width="1800" height="1350" alt="Heller Wohnraum mit Kaminverkleidung, dunklen Wandakzenten und abgestufter Decke" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/flur-deckenspots-large.webp" data-lightbox data-title="Licht im Eingangsbereich" data-description="Helle Wandflächen und eingelassene Deckenspots begleiten den Weg zur Treppe." aria-label="Licht im Eingangsbereich – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/flur-deckenspots-small.webp" srcset="assets/projects/flur-deckenspots-large.webp 640w" sizes="(max-width: 760px) 100vw, 50vw" width="640" height="480" alt="Heller Eingangsbereich mit Holztreppe, Deckenspots und türkisfarbenem Türrahmen" loading="eager" decoding="async">
+            </a>
+            <a class="hero-slide" href="assets/projects/fassade-mediterran-large.webp" data-lightbox data-title="Helle Flächen, Naturstein" data-description="Helle Fassadenflächen im Zusammenspiel mit Natursteinbögen und einer Holzpergola." aria-label="Helle Flächen, Naturstein – Bild vergrößern" aria-hidden="true" tabindex="-1" inert>
+              <img src="assets/projects/fassade-mediterran-small.webp" srcset="assets/projects/fassade-mediterran-small.webp 720w, assets/projects/fassade-mediterran-large.webp 1800w" sizes="(max-width: 760px) 100vw, 50vw" width="1800" height="1350" alt="Mediterranes Haus mit heller Fassade, Natursteinbögen und hölzerner Pergola" loading="eager" decoding="async">
+            </a>
+            <figcaption>
+              <div>
+                <small>Handwerk, das Räume verändert</small>
+                <strong>Licht. Fläche. Atmosphäre.</strong>
+              </div>
+              <span class="circle" aria-hidden="true">↗</span>
+            </figcaption>
+            <div class="slideshow-controls" hidden>
+              <span class="slide-counter" data-slide-counter aria-live="off" aria-label="Bild 1 von 9">01 / 9</span>
+              <div class="slide-buttons">
+                <button type="button" data-slide-prev aria-label="Vorheriges Vorschaubild">←</button>
+                <button type="button" data-slide-pause aria-label="Automatischen Bildwechsel pausieren">Ⅱ</button>
+                <button type="button" data-slide-next aria-label="Nächstes Vorschaubild">→</button>
+              </div>
+            </div>
+          </figure>
+        </section>
+        <div class="credentials" aria-label="Unser Anspruch">
+          <div class="credential">
+            <strong>25+</strong>
+            <span>Jahre Erfahrung<br>im Ausbau & Malerhandwerk</span>
+          </div>
+          <div class="credential">
+            <strong>Präzise.</strong>
+            <span>Von der Unterkonstruktion<br>bis zur fertigen Oberfläche</span>
+          </div>
+          <div class="credential">
+            <strong>Persönlich.</strong>
+            <span>Klare Absprachen<br>für Ihr Vorhaben</span>
+          </div>
         </div>
       </div>
-
-      <div class="trust">
-        <div class="pill">
-          <strong>25+ Jahre</strong>
-          <span>Erfahrung (GR & Bayern)</span>
+      <section class="section" id="arbeiten">
+        <div class="wrap">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Ausgewählte Arbeiten</p>
+              <h2>Räume mit <em>Handschrift.</em>
+              </h2>
+            </div>
+            <a class="text-link" href="galerie.html">Alle 37 Bilder entdecken <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="featured">
+            <figure class="project" data-category="Licht &amp; Form">
+              <a class="image-link" href="assets/projects/theke-formgestaltung-large.webp" data-lightbox data-title="Formen für den Empfang" data-description="Geschwungene Theke und grüne geometrische Wandelemente; Aufnahme aus der Ausbauphase." aria-label="Formen für den Empfang – Bild vergrößern">
+                <img src="assets/projects/theke-formgestaltung-small.webp" srcset="assets/projects/theke-formgestaltung-large.webp 480w" sizes="(max-width: 760px) 100vw, (max-width: 980px) 50vw, 33vw" width="480" height="640" alt="Graue runde Theke vor grünen geometrischen Wandregalen und einer Decke mit Spots" loading="lazy" decoding="async">
+                <span class="zoom-mark" aria-hidden="true">↗</span>
+              </a>
+              <figcaption>
+                <p class="category">Licht &amp; Form</p>
+                <h3>Formen für den Empfang</h3>
+                <p class="description">Geschwungene Theke und grüne geometrische Wandelemente; Aufnahme aus der Ausbauphase.</p>
+              </figcaption>
+            </figure>
+            <figure class="project" data-category="Malerarbeiten">
+              <a class="image-link" href="assets/projects/strukturwand-geschaeft-large.webp" data-lightbox data-title="Struktur trifft klare Linien" data-description="Graue Strukturflächen mit weißen Einfassungen; Aufnahme während des Ladenausbaus." aria-label="Struktur trifft klare Linien – Bild vergrößern">
+                <img src="assets/projects/strukturwand-geschaeft-small.webp" srcset="assets/projects/strukturwand-geschaeft-large.webp 640w" sizes="(max-width: 760px) 100vw, (max-width: 980px) 50vw, 33vw" width="640" height="480" alt="Graue strukturierte Wandfelder zwischen weißen Stützen, davor eine Leiter" loading="lazy" decoding="async">
+                <span class="zoom-mark" aria-hidden="true">↗</span>
+              </a>
+              <figcaption>
+                <p class="category">Malerarbeiten</p>
+                <h3>Struktur trifft klare Linien</h3>
+                <p class="description">Graue Strukturflächen mit weißen Einfassungen; Aufnahme während des Ladenausbaus.</p>
+              </figcaption>
+            </figure>
+            <figure class="project" data-category="Fassade">
+              <a class="image-link" href="assets/projects/fassade-mediterran-large.webp" data-lightbox data-title="Helle Flächen, Naturstein" data-description="Helle Fassadenflächen im Zusammenspiel mit Natursteinbögen und einer Holzpergola." aria-label="Helle Flächen, Naturstein – Bild vergrößern">
+                <img src="assets/projects/fassade-mediterran-small.webp" srcset="assets/projects/fassade-mediterran-small.webp 720w, assets/projects/fassade-mediterran-large.webp 1800w" sizes="(max-width: 760px) 100vw, (max-width: 980px) 50vw, 33vw" width="1800" height="1350" alt="Mediterranes Haus mit heller Fassade, Natursteinbögen und hölzerner Pergola" loading="lazy" decoding="async">
+                <span class="zoom-mark" aria-hidden="true">↗</span>
+              </a>
+              <figcaption>
+                <p class="category">Fassade</p>
+                <h3>Helle Flächen, Naturstein</h3>
+                <p class="description">Helle Fassadenflächen im Zusammenspiel mit Natursteinbögen und einer Holzpergola.</p>
+              </figcaption>
+            </figure>
+          </div>
         </div>
-        <div class="pill">
-          <strong>Saubere Baustelle</strong>
-          <span>Ordentlich & termintreu</span>
+      </section>
+      <section class="section services" id="leistungen">
+        <div class="wrap">
+          <div class="services-top">
+            <div>
+              <p class="eyebrow">Unsere Leistungen</p>
+              <h2>Ihre Idee.<br>Unser Handwerk.</h2>
+            </div>
+            <p>Ob einzelne Wand oder umfassende Renovierung: Wir verbinden sorgfältige Vorbereitung mit einem Blick für Farbe, Proportion und die Details im Raum.</p>
+          </div>
+          <div class="service-list">
+            <article class="service">
+              <span class="service-number">01 /</span>
+              <div>
+                <h3>Maler- & Lackierarbeiten</h3>
+                <p>Wände, Decken und Türen. Helle Flächen, kräftige Akzente und saubere Kanten für ein stimmiges Gesamtbild.</p>
+              </div>
+            </article>
+            <article class="service">
+              <span class="service-number">02 /</span>
+              <div>
+                <h3>Trockenbau & Innenausbau</h3>
+                <p>Trennwände, Dachschrägen, Decken und Verkleidungen. Individuelle Nischen und Raumaufteilungen passend zum Bestand.</p>
+              </div>
+            </article>
+            <article class="service">
+              <span class="service-number">03 /</span>
+              <div>
+                <h3>Spachteln & Oberflächen</h3>
+                <p>Untergründe ausbessern, Flächen glätten und tapezieren. Auch dekorative Spachteltechniken geben Wänden eine eigene Wirkung.</p>
+              </div>
+            </article>
+            <article class="service">
+              <span class="service-number">04 /</span>
+              <div>
+                <h3>Renovierung & Fassaden</h3>
+                <p>Bestehende Räume erneuern, Außenflächen überarbeiten und Dämmung einarbeiten. Mit sorgfältigen Anschlüssen an Fenster und Bauteile.</p>
+              </div>
+            </article>
+          </div>
+          <div class="special">
+            <p>
+              <strong>Besondere Ideen für Ihre Decke.</strong>
+              <br>Geformte Decken, Lichtnischen und die Montage von Pix-Light LED-Sternenhimmeln.</p>
+            <a class="text-link" href="https://pix-light.de/" target="_blank" rel="noopener noreferrer">Pix-Light ansehen <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
-        <div class="pill">
-          <strong>Top Qualität</strong>
-          <span>Präzise & langlebig</span>
+      </section>
+      <section class="section" id="ueberuns">
+        <div class="wrap about">
+          <div>
+            <p class="eyebrow">Refaiya Osama</p>
+            <h2>Erfahrung, die<br>im Detail <em>steckt.</em>
+            </h2>
+          </div>
+          <div class="about-copy">
+            <p>
+              <strong>15 Jahre Berufserfahrung in Griechenland und weitere 10 Jahre in Bayern</strong> prägen unsere Arbeit. Von dekorativen Wänden und besonderen Deckenformen bis zum soliden Innenausbau: Wir kennen die Arbeit hinter einer guten Oberfläche.</p>
+            <p>Wir arbeiten von Peißenberg aus und besprechen mit Ihnen, was Ihr Projekt braucht. Sorgfältiges Abdecken, passende Materialien und eine ordentliche Ausführung gehören für uns dazu.</p>
+            <div class="principles">
+              <span>Sorgfältige Vorbereitung</span>
+              <span>Klare Absprachen</span>
+              <span>Saubere Ausführung</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <aside class="hero-side" aria-label="Highlights">
-      <div class="hero-photo" role="img" aria-label="Beispielprojekt"></div>
-      <div class="side-inner">
-        <h3>Wobei wir helfen</h3>
-        <ul class="checklist">
-          <li>Wände, Decken, Lack & Innenräume</li>
-          <li>Trockenbau, Decken, Wände, Nischen</li>
-          <li>Spachteln, Tapezieren, Renovierung</li>
-          <li>Wärmedämmung & Sanierung</li>
-        </ul>
-        <a class="cta" href="#kontakt" style="justify-content:center;">Kontakt & Termin</a>
-      </div>
-    </aside>
-
-  </div>
-</main>
-
-<!-- LEISTUNGEN -->
-<section id="leistungen">
-  <div class="container section-card">
-    <div class="section-head">
-      <h2>Leistungen</h2>
-      <p class="sub">Alles aus einer Hand – klar, sauber und fachgerecht umgesetzt.</p>
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <div class="icon">🎨</div>
-        <strong>Maler- & Lackierarbeiten</strong>
-        <p>Innenräume, Decken, Wände, Türen – sauber abgeklebt und gleichmäßig gestrichen.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🧱</div>
-        <strong>Trockenbau</strong>
-        <p>Wände, Decken, Abhängungen, Nischen – stabil, gerade, sauber verspachtelt.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🪛</div>
-        <strong>Spachteln & Tapezieren</strong>
-        <p>Glattflächen, Ausbesserungen, Struktur – perfekte Grundlage für Farbe oder Tapete.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🏠</div>
-        <strong>Renovierung & Dämmung</strong>
-        <p>Modernisierung, Ausbesserung, Wärmedämmung – für ein besseres Wohngefühl.</p>
-      </div>
-    </div>
-
-    <div class="material-feature">
-      <div class="material-feature-content">
-        <div class="icon" aria-hidden="true">✨</div>
-        <div>
-          <strong>Pix-Light LED-Sternenhimmel</strong>
-          <p>
-            Wir verarbeiten und montieren auch Materialien und Systeme von Pix-Light –
-            für individuell gestaltete LED-Sternenhimmel an Decken und Wänden.
-          </p>
+      </section>
+      <section class="contact" id="kontakt" aria-labelledby="contact-heading">
+        <div class="wrap contact-grid">
+          <div>
+            <p class="eyebrow">Gemeinsam wird etwas daraus</p>
+            <h2 id="contact-heading">Was haben Sie<br>mit Ihren Räumen vor?</h2>
+            <p>Ein frischer Anstrich oder ein kompletter Ausbau? Erzählen Sie uns von Ihrem Vorhaben. Hilfreich sind Ort, Fläche, Wunschtermin und ein paar Fotos.</p>
+            <div class="actions">
+              <a class="button" href="mailto:refaiya.maler@gmail.com?subject=Projektanfrage%20Refaiya">E-Mail schreiben <span aria-hidden="true">↗</span>
+              </a>
+              <a class="button light" href="https://wa.me/491737204583?text=Hallo%2C%20ich%20m%C3%B6chte%20ein%20Projekt%20anfragen." target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+          <div class="contact-info">
+            <a class="phone" href="tel:+491737204583">0173 7204583</a>
+            <a class="email" href="mailto:refaiya.maler@gmail.com">refaiya.maler@gmail.com</a>
+            <address>Refaiya Osama · Maler & Trockenbau<br>Ettaler Str. 2<br>82380 Peißenberg, Bayern</address>
+          </div>
         </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <span>© 2026 Refaiya. Handwerk mit Anspruch.</span>
+        <span>Peißenberg · Bayern</span>
+        <a href="#top">Nach oben ↑</a>
       </div>
-      <a class="cta secondary" href="https://pix-light.de/" target="_blank" rel="noopener noreferrer">
-        Pix-Light ansehen ↗
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ÜBER UNS -->
-<section id="ueberuns">
-  <div class="container section-card">
-    <div class="section-head">
-      <h2>Über uns</h2>
-      <p class="sub">Handwerk mit Anspruch – zuverlässig, freundlich und detailorientiert.</p>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-box">
-        <p style="margin:0;color:var(--muted);font-size:1.02rem;">
-          Mit über <strong>15 Jahren Berufserfahrung in Griechenland</strong> und weiteren
-          <strong>10 Jahren erfolgreicher Tätigkeit in Bayern</strong> steht Refaiya Osama
-          für handwerkliche Qualität und Zuverlässigkeit.
-          Unsere Arbeiten werden schnell, präzise und auf hohem Niveau ausgeführt –
-          zur vollsten Zufriedenheit unserer Kunden.
+    </footer>
+    <dialog class="lightbox" aria-labelledby="lightbox-title" aria-describedby="lightbox-description">
+      <div class="lightbox-top">
+        <p id="lightbox-title">Projektansicht</p>
+        <span id="lightbox-counter" aria-live="polite">
+        </span>
+        <button type="button" data-close aria-label="Bildvorschau schließen">Schließen ×</button>
+      </div>
+      <img class="lightbox-image" alt="">
+      <div class="lightbox-bottom">
+        <p id="lightbox-description">
         </p>
-      </div>
-
-      <div class="about-box">
-        <strong>Warum Kunden uns wählen</strong>
-        <ul>
-          <li>Saubere Ausführung & Schutz der Einrichtung</li>
-          <li>Klare Absprachen, transparente Kommunikation</li>
-          <li>Termintreue und zuverlässige Fertigstellung</li>
-          <li>Gute Materialien, saubere Kanten, glatte Flächen</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GALERIE -->
-<section id="galerie">
-  <div class="container section-card">
-    <div class="section-head">
-      <h2>Galerie</h2>
-      <p class="sub">Einige Beispiele unserer Arbeiten. Klicken zum Vergrößern.</p>
-    </div>
-
-    <div class="gallery" id="galleryGrid">
-      <figure class="thumb" data-full="assets/dachgeschossrenovierung-nachher.jpg" data-title="Dachgeschoss – nachher">
-        <img src="assets/dachgeschossrenovierung-nachher.jpg" alt="Fertig renovierter Dachgeschossraum mit weißen Wänden und neuer Decke" loading="lazy">
-        <figcaption class="label">Dachgeschoss – nachher</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/dachgeschossrenovierung-trockenbau.jpg" data-title="Dachgeschoss – Trockenbau">
-        <img src="assets/dachgeschossrenovierung-trockenbau.jpg" alt="Dachgeschoss während der Verkleidung der Decke mit Trockenbauplatten" loading="lazy">
-        <figcaption class="label">Dachgeschoss – Trockenbau</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/dachgeschossrenovierung-vorher.jpg" data-title="Dachgeschoss – vorher">
-        <img src="assets/dachgeschossrenovierung-vorher.jpg" alt="Dachgeschossraum mit alter Holzdecke vor der Renovierung" loading="lazy">
-        <figcaption class="label">Dachgeschoss – vorher</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/treppenverkleidung-verspachtelt.jpg" data-title="Treppenverkleidung – verspachtelt">
-        <img src="assets/treppenverkleidung-verspachtelt.jpg" alt="Verspachtelte Trockenbauverkleidung einer Treppe" loading="lazy">
-        <figcaption class="label">Treppenverkleidung – verspachtelt</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/treppenverkleidung-unterkonstruktion.jpg" data-title="Treppenverkleidung – Aufbau">
-        <img src="assets/treppenverkleidung-unterkonstruktion.jpg" alt="Unterkonstruktion und Dämmung einer Treppenverkleidung" loading="lazy">
-        <figcaption class="label">Treppenverkleidung – Aufbau</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/trockenbau-treppenhaus.jpg" data-title="Trockenbau im Treppenhaus">
-        <img src="assets/trockenbau-treppenhaus.jpg" alt="Trockenbauarbeiten rund um ein neues Treppenhaus" loading="lazy">
-        <figcaption class="label">Trockenbau im Treppenhaus</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/trockenbau-decke-lichtschienen.jpg" data-title="Decke mit Lichtschienen">
-        <img src="assets/trockenbau-decke-lichtschienen.jpg" alt="Verspachtelte Trockenbaudecke mit eingelassenen Lichtschienen" loading="lazy">
-        <figcaption class="label">Decke mit Lichtschienen</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/bad-trockenbau-unterkonstruktion.jpg" data-title="Bad – Trockenbau und Dämmung">
-        <img src="assets/bad-trockenbau-unterkonstruktion.jpg" alt="Gedämmte Trockenbau-Unterkonstruktion für ein Badezimmer" loading="lazy">
-        <figcaption class="label">Bad – Trockenbau und Dämmung</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/bad-vorwandinstallation-daemmung.jpg" data-title="Bad – Vorwandinstallation">
-        <img src="assets/bad-vorwandinstallation-daemmung.jpg" alt="Vorwandinstallation im Bad mit Metallprofilen und Dämmung" loading="lazy">
-        <figcaption class="label">Bad – Vorwandinstallation</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/installationswand-verspachtelt.jpg" data-title="Installationswand – verspachtelt">
-        <img src="assets/installationswand-verspachtelt.jpg" alt="Verspachtelte Installationswand mit vorbereiteten Elektroanschlüssen" loading="lazy">
-        <figcaption class="label">Installationswand – verspachtelt</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/trockenbau-decke-verspachtelt.jpg" data-title="Trockenbaudecke – verspachtelt">
-        <img src="assets/trockenbau-decke-verspachtelt.jpg" alt="Verspachtelte Trockenbaudecke und Wandverkleidung" loading="lazy">
-        <figcaption class="label">Trockenbaudecke – verspachtelt</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/installationswand-daemmung.jpg" data-title="Installationswand mit Dämmung">
-        <img src="assets/installationswand-daemmung.jpg" alt="Installationswand mit Metallprofilen, Leitungen und Dämmung" loading="lazy">
-        <figcaption class="label">Installationswand mit Dämmung</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/trockenbau-wand-mit-nische.jpg" data-title="Trockenbauwand mit Nische">
-        <img src="assets/trockenbau-wand-mit-nische.jpg" alt="Verspachtelte Trockenbauwand mit individuell gebauter Nische" loading="lazy">
-        <figcaption class="label">Trockenbauwand mit Nische</figcaption>
-      </figure>
-
-      <figure class="thumb" data-full="assets/refaiya-firmenfahrzeug.jpg" data-title="Refaiya Firmenfahrzeug">
-        <img src="assets/refaiya-firmenfahrzeug.jpg" alt="Firmenfahrzeug von Refaiya Maler und Trockenbau" loading="lazy">
-        <figcaption class="label">Refaiya Firmenfahrzeug</figcaption>
-      </figure>
-    </div>
-
-    <div class="gallery-toggle-wrap">
-      <button class="cta secondary gallery-toggle" id="galleryToggle" type="button" aria-controls="galleryGrid" aria-expanded="false">
-        <span id="galleryToggleLabel">Alle 14 Bilder anzeigen</span>
-        <span class="gallery-toggle-icon" aria-hidden="true">⌄</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="kontakt">
-  <div class="container section-card">
-    <div class="section-head">
-      <h2>Kontakt</h2>
-      <p class="sub">Schreiben oder anrufen – wir melden uns schnell zurück.</p>
-    </div>
-
-    <div class="contact-grid">
-      <div class="about-box">
-        <div class="info">
-          <div><strong>Telefon:</strong> <a href="tel:+491737204583">0173 7204583</a></div>
-          <div><strong>Email:</strong> <a href="mailto:refaiya.maler@gmail.com">refaiya.maler@gmail.com</a></div>
-          <div><strong>Adresse:</strong> Ettaler Str. 2, 82380 Peissenberg</div>
-        </div>
-
-        <div class="contact-actions">
-          <a class="cta" href="tel:+491737204583">📞 Anrufen</a>
-          <a class="cta secondary" href="mailto:refaiya.maler@gmail.com?subject=Anfrage%20%E2%80%93%20Refaiya&body=Hallo%2C%0A%0AIch%20m%C3%B6chte%20ein%20Angebot%20anfragen.%0A%0AAdresse%3A%0AProjekt%3A%0AWann%3A%0AFotos%3A%0A%0AVielen%20Dank!">✉️ E-Mail</a>
+        <div class="lightbox-nav">
+          <button type="button" data-prev aria-label="Vorheriges Bild">←</button>
+          <button type="button" data-next aria-label="Nächstes Bild">→</button>
         </div>
       </div>
-
-      <div class="about-box">
-        <strong>Für eine schnelle Anfrage</strong>
-        <ul style="margin:.75rem 0 0; padding-left: 1.1rem; color: var(--muted); display:grid; gap:.35rem;">
-          <li>Adresse/Ort</li>
-          <li>Was soll gemacht werden?</li>
-          <li>Ungefähre Fläche (m²) oder Zimmer</li>
-          <li>Wunschtermin</li>
-          <li>Fotos (wenn möglich)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;align-items:center;">
-      <span>© 2026 Refaiya – Alle Rechte vorbehalten</span>
-      <span style="opacity:.5;">•</span>
-      <a href="#top" style="text-decoration:none; font-weight:700; color: var(--brand);">Nach oben ↑</a>
-    </div>
-  </div>
-</footer>
-
-<!-- Lightbox dialog -->
-<dialog id="lightboxDialog" aria-label="Bildvorschau">
-  <div class="lightbox">
-    <div class="lightbox-bar">
-      <div class="lightbox-title" id="lightboxTitle">Bild</div>
-      <button class="lightbox-close" id="lightboxClose" type="button">Schließen ✕</button>
-    </div>
-    <img class="lightbox-img" id="lightboxImg" alt="">
-  </div>
-</dialog>
-
-<script>
-  // Mobile menu toggle
-  const menuBtn = document.getElementById("menuBtn");
-  const mobileNav = document.getElementById("mobileNav");
-
-  menuBtn?.addEventListener("click", () => {
-    const open = mobileNav.classList.toggle("open");
-    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-  });
-
-  // Close mobile drawer when clicking a link
-  mobileNav?.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target && target.tagName === "A") {
-      mobileNav.classList.remove("open");
-      menuBtn.setAttribute("aria-expanded", "false");
-    }
-  });
-
-  // Gallery lightbox (accessible)
-  const dialog = document.getElementById("lightboxDialog");
-  const imgEl = document.getElementById("lightboxImg");
-  const titleEl = document.getElementById("lightboxTitle");
-  const closeBtn = document.getElementById("lightboxClose");
-  const galleryGrid = document.getElementById("galleryGrid");
-  const galleryToggle = document.getElementById("galleryToggle");
-  const galleryToggleLabel = document.getElementById("galleryToggleLabel");
-  const galleryItems = galleryGrid ? [...galleryGrid.querySelectorAll(".thumb")] : [];
-
-  function setGalleryExpanded(expanded){
-    galleryGrid?.classList.toggle("is-expanded", expanded);
-    galleryToggle?.setAttribute("aria-expanded", expanded ? "true" : "false");
-    if (galleryToggleLabel) {
-      galleryToggleLabel.textContent = expanded
-        ? "Galerie einklappen"
-        : `Alle ${galleryItems.length} Bilder anzeigen`;
-    }
-    galleryItems.forEach((item, index) => {
-      if (expanded || index < 3) item.removeAttribute("aria-hidden");
-      else item.setAttribute("aria-hidden", "true");
-    });
-  }
-
-  setGalleryExpanded(false);
-
-  galleryToggle?.addEventListener("click", () => {
-    const expanded = galleryToggle.getAttribute("aria-expanded") !== "true";
-    setGalleryExpanded(expanded);
-    if (!expanded) {
-      document.getElementById("galerie")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
-
-  function openLightbox(src, title, alt){
-    if (!dialog) return;
-    imgEl.src = src;
-    imgEl.alt = alt || title || "Bild";
-    titleEl.textContent = title || "Bild";
-    dialog.showModal();
-  }
-
-  function closeLightbox(){
-    if (!dialog) return;
-    dialog.close();
-    imgEl.src = "";
-  }
-
-  galleryGrid?.addEventListener("click", (e) => {
-    const fig = e.target.closest(".thumb");
-    if (!fig || fig.getAttribute("aria-hidden") === "true") return;
-    const src = fig.getAttribute("data-full");
-    const title = fig.getAttribute("data-title");
-    const img = fig.querySelector("img");
-    openLightbox(src, title, img?.alt);
-  });
-
-  closeBtn?.addEventListener("click", closeLightbox);
-
-  dialog?.addEventListener("click", (e) => {
-    // click outside the image area closes
-    const rect = dialog.getBoundingClientRect();
-    const x = e.clientX, y = e.clientY;
-    const inDialog = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-    if (inDialog && e.target === dialog) closeLightbox();
-  });
-
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && dialog?.open) closeLightbox();
-  });
-</script>
-
-  <!-- whatsapp button -->
-  <a
-          href="https://wa.me/491737204583?text=Hallo%2C%20ich%20m%C3%B6chte%20ein%20Angebot%20anfragen."
-          class="wa-float"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="WhatsApp schreiben"
-  >
-    <img src="assets/whatsapp-icon.png" alt="WhatsApp">
-  </a>
-
-</body>
+    </dialog>
+  </body>
 </html>
